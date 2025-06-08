@@ -33,15 +33,22 @@ def main():
                     
                     # Verificar si hay suficiente texto para generar resumen y nube
                     if texto_completo.strip():
-                        # Generar resumen
-                        resumen = generar_resumen(texto_completo, OPENAI_API_KEY)
-                        st.header("Resumen Generado")
-                        st.write(resumen)
+                        # Generar resumen con manejo de errores
+                        try:
+                            resumen = generar_resumen(texto_completo, OPENAI_API_KEY)
+                            st.header("Resumen Generado")
+                            st.write(resumen)
+                        except Exception as e:
+                            st.error(f"Error al generar resumen: {str(e)}")
+                            st.info("Verifica que tu API key de OpenAI sea válida y tenga créditos disponibles.")
                         
                         # Generar nube de palabras
-                        st.header("Nube de Palabras")
-                        plt = generar_nube_de_palabras(texto_completo)
-                        st.pyplot(plt.gcf())
+                        try:
+                            st.header("Nube de Palabras")
+                            plt = generar_nube_de_palabras(texto_completo)
+                            st.pyplot(plt.gcf())
+                        except Exception as e:
+                            st.error(f"Error al generar nube de palabras: {str(e)}")
                     else:
                         st.warning("No hay suficiente contenido para generar resumen y nube de palabras.")
                 else:
