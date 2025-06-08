@@ -9,6 +9,12 @@ from modulos.config import TAVILY_API_KEY, OPENAI_API_KEY
 def main():
     st.title("Asistente Digital de Investigación")
     
+    # Verificar configuración de API keys
+    if not OPENAI_API_KEY or not OPENAI_API_KEY.startswith("sk-"):
+        st.error("⚠️ API Key de OpenAI no configurada correctamente")
+        st.info("Por favor, configura tu API key en el archivo .env")
+        return
+    
     # Entrada del usuario
     tema = st.text_input("Ingresa un tema de interés:")
     
